@@ -1,0 +1,6 @@
+%dw 2.0
+
+type auto_0e74af11_f614_47ee_bda0_71f454ec770f_Output_Attributes = {| consumerCommitKey?: String |} {"typeId": "com.mulesoft.connectors.kafka.api.source.ConsumerContext",
+"typeAlias": "ConsumerContext",
+"class": "com.mulesoft.connectors.kafka.api.source.ConsumerContext"}
+

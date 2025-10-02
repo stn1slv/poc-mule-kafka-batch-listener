@@ -1,0 +1,39 @@
+%dw 2.0
+
+type auto_0e74af11_f614_47ee_bda0_71f454ec770f_Input_Payload = Array<com_mulesoft_connectors_kafka_api_source_Record {"class": "com.mulesoft.connectors.kafka.api.source.Record",
+"typeAlias": "Record",
+"typeId": "com.mulesoft.connectors.kafka.api.source.Record"}>
+type com_mulesoft_connectors_kafka_api_source_Record = {|
+  attributes?: com_mulesoft_connectors_kafka_api_KafkaRecordAttributes {"class": "com.mulesoft.connectors.kafka.api.KafkaRecordAttributes",
+  "typeAlias": "KafkaRecordAttributes",
+  "typeId": "com.mulesoft.connectors.kafka.api.KafkaRecordAttributes"}, 
+  payload?: Binary, 
+  serByteArray?: com_mulesoft_connectors_kafka_internal_model_serializer_SerByteArray {"typeId": "com.mulesoft.connectors.kafka.internal.model.serializer.SerByteArray",
+  "typeAlias": "SerByteArray"}
+|} {"class": "com.mulesoft.connectors.kafka.api.source.Record",
+"typeAlias": "Record",
+"typeId": "com.mulesoft.connectors.kafka.api.source.Record"}
+type com_mulesoft_connectors_kafka_api_KafkaRecordAttributes = {|
+  consumerCommitKey?: String, 
+  creationTimestamp?: DateTime {"typeId": "java.time.ZonedDateTime"}, 
+  headers?: { _?: Binary }, 
+  key?: Binary, 
+  leaderEpoch?: Number, 
+  logAppendTimestamp?: DateTime {"typeId": "java.time.ZonedDateTime"}, 
+  offset?: Number, 
+  partition?: Number, 
+  serializedKeySize?: Number, 
+  serializedValueSize?: Number, 
+  topic?: String
+|} {"class": "com.mulesoft.connectors.kafka.api.KafkaRecordAttributes",
+"typeAlias": "KafkaRecordAttributes",
+"typeId": "com.mulesoft.connectors.kafka.api.KafkaRecordAttributes"}
+
+
+type com_mulesoft_connectors_kafka_internal_model_serializer_SerByteArray = {| inputStream?: Binary |} {"typeId": "com.mulesoft.connectors.kafka.internal.model.serializer.SerByteArray",
+"typeAlias": "SerByteArray"}
+
+
+
+
+

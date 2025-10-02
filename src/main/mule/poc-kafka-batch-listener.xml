@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:kafka="http://www.mulesoft.org/schema/mule/kafka"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/kafka http://www.mulesoft.org/schema/mule/kafka/current/mule-kafka.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<kafka:consumer-config name="KafkaConnection-2"
+		doc:name="Apache Kafka Consumer configuration-2"
+		doc:id="86bb6752-c50d-4b61-8f72-25abc6962707">
+		<kafka:consumer-plaintext-connection
+			recordLimit="20" isolationLevel="READ_COMMITTED">
+			<kafka:bootstrap-servers>
+				<kafka:bootstrap-server
+					value="127.0.0.1:9094" />
+			</kafka:bootstrap-servers>
+			<kafka:topic-patterns>
+				<kafka:topic-pattern value="batch-topic-2" />
+			</kafka:topic-patterns>
+		</kafka:consumer-plaintext-connection>
+	</kafka:consumer-config>
+
+	<kafka:consumer-config name="KafkaConnection-1"
+		doc:name="Apache Kafka Consumer configuration"
+		doc:id="efea7ea4-9b79-4ae1-9625-af46e908a284">
+		<kafka:consumer-plaintext-connection
+			recordLimit="20" isolationLevel="READ_COMMITTED">
+			<kafka:bootstrap-servers>
+				<kafka:bootstrap-server
+					value="127.0.0.1:9094" />
+			</kafka:bootstrap-servers>
+			<kafka:topic-patterns>
+				<kafka:topic-pattern value="batch-topic-1" />
+			</kafka:topic-patterns>
+		</kafka:consumer-plaintext-connection>
+	</kafka:consumer-config>
+	<flow name="manual-commit"
+		doc:id="f876fa87-c8e5-42bc-b23b-1278bf4a37b6">
+		<kafka:batch-message-listener
+			doc:name="Batch message listener"
+			doc:id="b0631a01-ee0f-4c01-8c74-08fa6e40ec73"
+			config-ref="KafkaConnection-2" pollTimeout="2"
+			pollTimeoutTimeUnit="MINUTES" ackMode="MANUAL" />
+		<flow-ref doc:name="Flow Reference"
+			doc:id="9ceea8bf-b48f-4a81-84ba-e24b84725f4b" name="logging-subflow" />
+		<kafka:commit doc:name="Commit" doc:id="3626d6a2-2836-4e8a-b41e-932594d161d4" config-ref="KafkaConnection-2" commitKey="#[attributes.consumerCommitKey]"/>
+	</flow>
+	<flow name="auto-commit"
+		doc:id="ee810f4c-f625-4865-898b-7c3e1f29295e">
+		<kafka:batch-message-listener
+			doc:name="Batch message listener"
+			doc:id="000b0bcf-ca1c-42ca-bb72-68cbc023d12f"
+			config-ref="KafkaConnection-1" pollTimeout="2"
+			pollTimeoutTimeUnit="MINUTES" ackMode="AUTO" />
+		<flow-ref doc:name="Flow Reference"
+			doc:id="0ea92da5-e743-460e-976e-4c28a0156956" name="logging-subflow" />
+	</flow>
+	<sub-flow name="logging-subflow"
+		doc:id="0e74af11-f614-47ee-bda0-71f454ec770f">
+		<logger level="INFO" doc:name="Logger"
+			doc:id="25c6fe97-798e-4cf3-b8f0-138939cf9e2f"
+			message="======================================" />
+		<logger level="INFO" doc:name="Logger"
+			doc:id="1a94242c-afb6-432a-83c5-9817b7b4644a"
+			message="A new batch of #[sizeOf(payload)] elements" />
+		<foreach doc:name="For Each"
+			doc:id="2b692874-632b-400f-ac58-fa23d69bbb98" collection="#[payload]">
+			<logger level="INFO" doc:name="Logger"
+				doc:id="d51a664a-015b-4219-929a-215123b26d08"
+				message="partition number: #[payload.attributes.partition], offset: #[payload.attributes.offset], msg commitKey: #[payload.attributes.consumerCommitKey]" />
+		</foreach>
+		<logger level="INFO" doc:name="Logger" doc:id="682dcc20-1b1c-4c80-90b7-1e62a4b77916" message="batch commitKey: #[attributes.consumerCommitKey]"/>
+	</sub-flow>
+</mule>
