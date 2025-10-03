@@ -12,9 +12,12 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 		doc:name="Apache Kafka Consumer configuration-2"
 		doc:id="86bb6752-c50d-4b61-8f72-25abc6962707">
 		<kafka:consumer-plaintext-connection
-			recordLimit="20" isolationLevel="READ_COMMITTED"
-			fetchMaximumWaitTimeout="10" fetchMaximumWaitTimeoutUnit="SECONDS"
-			fetchMinimumSize="10" fetchMinimumSizeUnit="KB">
+			recordLimit="20" 
+			isolationLevel="READ_COMMITTED"
+			fetchMaximumWaitTimeout="10" 
+			fetchMaximumWaitTimeoutUnit="SECONDS"
+			fetchMinimumSize="10" 
+			fetchMinimumSizeUnit="KB">
 			<kafka:bootstrap-servers>
 				<kafka:bootstrap-server
 					value="127.0.0.1:9094" />
@@ -29,9 +32,12 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 		doc:name="Apache Kafka Consumer configuration"
 		doc:id="efea7ea4-9b79-4ae1-9625-af46e908a284">
 		<kafka:consumer-plaintext-connection
-			recordLimit="20" isolationLevel="READ_COMMITTED"
-			fetchMaximumWaitTimeout="10" fetchMaximumWaitTimeoutUnit="SECONDS"
-			fetchMinimumSize="10" fetchMinimumSizeUnit="KB">
+			recordLimit="20" 
+			isolationLevel="READ_COMMITTED"
+			fetchMaximumWaitTimeout="10" 
+			fetchMaximumWaitTimeoutUnit="SECONDS"
+			fetchMinimumSize="10" 
+			fetchMinimumSizeUnit="KB">
 			<kafka:bootstrap-servers>
 				<kafka:bootstrap-server
 					value="127.0.0.1:9094" />
